@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="radzen.blazor" Version="5.3.5" />
+  </ItemGroup>
+
 </Project>
