@@ -1,4 +1,5 @@
 using Task3.Components;
+using Task3.Repository.Todo;
 
 namespace Task3
 {
@@ -12,6 +13,7 @@ namespace Task3
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
+            builder.Services.AddSingleton(typeof(IToDoRepository), typeof(ToDoInMemoryRepository));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
