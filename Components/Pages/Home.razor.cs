@@ -15,6 +15,7 @@ public partial class Home
     public async Task LoadTodoList()
     {
         await InitTodoList();
+        ToDoList.Sort((x, y) => x.CompareTo(y));
         StateHasChanged();
     }
 
@@ -24,17 +25,21 @@ public partial class Home
         await Task.Delay(3000);
         ToDoList.Add(
             new ToDoModel
-            { Title = "Task1", Deadline = DateTime.Now, Status = 0, Content = "Task1 Content"
+            {
+                Title = "Task3",
+                Deadline = DateTime.Now,
+                Status = 2,
+                Content = "Task3 Content"
             }
         );
         ToDoList.Add(
             new ToDoModel
-            { Title = "Task2", Deadline = DateTime.Now, Status = 1, Content = "Task2 Content"
+            { Title = "Task1", Deadline = new DateTime(2024,12,12), Status = 0, Content = "Task1 Content"
             }
         );
         ToDoList.Add(
             new ToDoModel
-            { Title = "Task3", Deadline = DateTime.Now, Status = 2, Content = "Task3 Content"
+            { Title = "Task2", Deadline = new DateTime(2024, 12, 11), Status = 0, Content = "Task2 Content"
             }
         );
         Console.WriteLine("TodoList読み込み終了");
