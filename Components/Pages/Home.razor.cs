@@ -1,10 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Components;
 using Task3.Entities;
 
 namespace Task3.Components.Pages;
 
 public partial class Home
 {
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+
+    private void NavigateToAddTodoPage() => Navigation.NavigateTo("/todo/form");
+
     private List<ToDoModel> ToDoList = new List<ToDoModel>();
 
     protected override async Task OnInitializedAsync()
@@ -27,7 +32,7 @@ public partial class Home
             new ToDoModel
             {
                 Title = "Task3",
-                Deadline = DateTime.Now,
+                Deadline = new DateTime(2024, 12, 13),
                 Status = 2,
                 Content = "Task3 Content"
             }
@@ -44,5 +49,4 @@ public partial class Home
         );
         Console.WriteLine("TodoList読み込み終了");
     }
-
 }

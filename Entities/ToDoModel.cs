@@ -1,4 +1,6 @@
-﻿namespace Task3.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Task3.Entities
 {
     /// <summary> 
     /// 題名　（必須）文字列
@@ -8,10 +10,39 @@
     /// </summary>
     public class ToDoModel : IComparable<ToDoModel>
     {
-        public required string Title { get; set; }
-        public required DateTime Deadline { get; set; }
-        public required int Status { get; set; }
-        public required string Content { get; set; }
+        private int _status;
+
+        public static readonly (int No, string Name)[] Statuses = {
+            (No: 0, Name: "未着手"),
+            (No: 1, Name: "仕掛中"),
+            (No: 2, Name: "完了"),
+            (No: 9, Name: "無視")
+        };
+
+        [Required(ErrorMessage = "タイトルは必須です。")]
+        public string? Title { get; set; }
+        [Required(ErrorMessage = "期限は必須です。")]
+        public DateTime Deadline { get; set; } = DateTime.Now;
+        [Required(ErrorMessage = "ステータスは必須です。")]
+        //ステータスをセットする際にStatusesに存在するintが指定されたか確認する。
+        public int Status
+        {
+            get => _status;
+            set
+            {
+                if (Statuses.Any(x => x.No == value))
+                {
+                    _status = value;
+                }
+                else
+                {
+                    throw new ArgumentException("ステータスが不正です。");
+                }
+            }
+        }
+
+        [Required(ErrorMessage = "内容は必須です。")]
+        public string? Content { get; set; }
 
         /// <summary>
         /// ToDoModelのプロパティを比較するメソッド

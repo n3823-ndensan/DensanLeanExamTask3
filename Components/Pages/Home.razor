@@ -1,9 +1,11 @@
-﻿@page "/"
+@page "/"
 
 <PageTitle>ToDoList</PageTitle>
 
 <h3>ToDolList</h3>
-
+<div>
+    <RadzenButton Click="NavigateToAddTodoPage" Text="追加" Icon="add" ButtonStyle="Radzen.ButtonStyle.Secondary" Style="margin-bottom: 10px"></RadzenButton>
+</div>
 @* ToDoListが0件だった場合はスピナーを表示する *@
 @if (ToDoList.Count == 0)
 {
@@ -27,7 +29,10 @@ else
             </RadzenDataGridColumn>
             <RadzenDataGridColumn Title="ステータス">
                 <Template>
-                    @context.Status
+                    @{
+                        var status = ToDoModel.Statuses.FirstOrDefault(s => s.No == context.Status);
+                        @status.Name
+                    }
                 </Template>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn Title="内容">
