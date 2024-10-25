@@ -5,10 +5,8 @@ namespace Task3.Components.Pages;
 
 public partial class Home
 {
-    [Inject]
-    private NavigationManager Navigation { get; set; }
 
-    private void NavigateToAddTodoPage() => Navigation.NavigateTo("/todo/form");
+    private void NavigateToAddTodoPage() => NavigationManager.NavigateTo("/todo/form");
 
     private List<ToDoModel> ToDoList = new List<ToDoModel>();
 
@@ -47,6 +45,6 @@ public partial class Home
 
     private void OnUpdateRow(ToDoModel todo)
     {
-        Navigation.NavigateTo($"/todo/form/{todo.Id}");
+        NavigationManager.NavigateTo($"/todo/form/{todo.Id}");
     }
 }

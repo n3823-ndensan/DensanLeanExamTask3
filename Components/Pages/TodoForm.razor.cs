@@ -5,9 +5,6 @@ namespace Task3.Components.Pages;
 
 public partial class TodoForm
 {
-    [Inject]
-    private NavigationManager Navigation { get; set; }
-
     [Parameter]
     public string? Id { get; set; }
 
@@ -30,6 +27,7 @@ public partial class TodoForm
                 todo = new ToDoModel();
                 IsInsert = true;
             }
+
         }
         catch (Exception ex)
         {
@@ -54,6 +52,6 @@ public partial class TodoForm
     }
     private void NavigateToHome()
     {
-        Navigation.NavigateTo("/");
+        NavigationManager.NavigateTo("/");
     }
 }
