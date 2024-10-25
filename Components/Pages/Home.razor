@@ -1,5 +1,6 @@
 @page "/"
 @inject Repository.Todo.IToDoRepository ToDoRepository
+@inject NavigationManager NavigationManager
 
 <PageTitle>ToDoList</PageTitle>
 
@@ -10,8 +11,10 @@
 @* ToDoListが0件だった場合はスピナーを表示する *@
 @if (ToDoList.Count == 0)
 {
-    <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
 }
 else
@@ -30,15 +33,18 @@ else
             </RadzenDataGridColumn>
             <RadzenDataGridColumn Title="ステータス">
                 <Template>
-                    @{
-                        var status = ToDoModel.Statuses.FirstOrDefault(s => s.No == context.Status);
-                        @status.Name
-                    }
+                    @GetStatusName(context.Status)
                 </Template>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn Title="内容">
                 <Template>
-                    @context.Content
+                    @GetContentFirstLine(context.Content)
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn>
+                <Template>
+                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="() => OnUpdateRow(context)" @onclick:stopPropagation="true">
+                    </RadzenButton>
                 </Template>
             </RadzenDataGridColumn>
         </Columns>

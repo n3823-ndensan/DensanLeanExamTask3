@@ -18,6 +18,8 @@ namespace Task3.Entities
             (No: 2, Name: "完了"),
             (No: 9, Name: "無視")
         };
+        
+        public string Id { get; set; } = System.Guid.NewGuid().ToString();
 
         [Required(ErrorMessage = "タイトルは必須です。")]
         public string? Title { get; set; }

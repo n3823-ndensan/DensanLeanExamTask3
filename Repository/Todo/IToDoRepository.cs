@@ -8,6 +8,13 @@ namespace Task3.Repository.Todo;
 public interface IToDoRepository
 {
     /// <summary>
+    /// ToDoModelのを取得する
+    /// </summary>
+    /// <returns>ToDoModelのリスト</returns>
+    /// <exception cref="KeyNotFoundException">指定したIdのToDoModelが見つからない場合</exception></exception>
+    Task<ToDoModel> GetToDoListByIdAsync(string Id);
+
+    /// <summary>
     /// ToDoModelのリストを取得する
     /// </summary>
     /// <returns>ToDoModelのリスト</returns>

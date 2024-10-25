@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Task3.Entities;
-using Task3.Repository.Todo;
 
 namespace Task3.Components.Pages;
 
 public partial class Home
 {
-    [Inject]
-    private NavigationManager Navigation { get; set; }
 
-    private void NavigateToAddTodoPage() => Navigation.NavigateTo("/todo/form");
+    private void NavigateToAddTodoPage() => NavigationManager.NavigateTo("/todo/form");
 
     private List<ToDoModel> ToDoList = new List<ToDoModel>();
 
@@ -39,5 +36,15 @@ public partial class Home
 
         return $"{lines.First()} ...";
 
+    }
+
+    private string GetStatusName(int no)
+    {
+        return ToDoModel.Statuses.FirstOrDefault(s => s.No == no).Name;
+    }
+
+    private void OnUpdateRow(ToDoModel todo)
+    {
+        NavigationManager.NavigateTo($"/todo/form/{todo.Id}");
     }
 }

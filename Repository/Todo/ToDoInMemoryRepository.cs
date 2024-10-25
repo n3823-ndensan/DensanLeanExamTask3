@@ -7,12 +7,22 @@ namespace Task3.Repository.Todo;
 /// </summary>
 public class ToDoInMemoryRepository : IToDoRepository
 {
-    private List<ToDoModel> _todoList = new List<ToDoModel>();
+    private readonly List<ToDoModel> _todoList = new List<ToDoModel>();
 
     public ToDoInMemoryRepository()
     {
         ToDoListSeedData.Initialize(this);
     }
+    public Task<ToDoModel> GetToDoListByIdAsync(string Id)
+    {
+        ToDoModel? todo = _todoList.Find(x => x.Id == Id);
+        if (todo == null)
+        {
+            throw new KeyNotFoundException($"ToDoModel not found. Id: {Id}");
+        }
+        return Task.FromResult(todo);
+    }
+
     /// <summary>
     /// ToDoModelのリストを取得する
     /// </summary>
