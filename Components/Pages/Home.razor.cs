@@ -40,4 +40,9 @@ public partial class Home
         return $"{lines.First()} ...";
 
     }
+
+    private string GetStatusName(int no)
+    {
+        return ToDoModel.Statuses.FirstOrDefault(s => s.No == no).Name;
+    }
 }

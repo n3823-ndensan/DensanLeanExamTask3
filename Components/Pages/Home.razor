@@ -30,15 +30,12 @@ else
             </RadzenDataGridColumn>
             <RadzenDataGridColumn Title="ステータス">
                 <Template>
-                    @{
-                        var status = ToDoModel.Statuses.FirstOrDefault(s => s.No == context.Status);
-                        @status.Name
-                    }
+                    @GetStatusName(context.Status)
                 </Template>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn Title="内容">
                 <Template>
-                    @context.Content
+                    @GetContentFirstLine(context.Content)
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
