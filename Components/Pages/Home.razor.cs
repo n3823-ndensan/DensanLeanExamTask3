@@ -27,4 +27,17 @@ public partial class Home
         ToDoList.Sort((x, y) => x.CompareTo(y));
         StateHasChanged();
     }
+    private string GetContentFirstLine(string? content)
+    {
+        if (string.IsNullOrEmpty(content)) return string.Empty;
+
+        var lines = content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+        if (lines.Length == 0) return string.Empty;
+
+        if (lines.Length == 1) return lines.First();
+
+        return $"{lines.First()} ...";
+
+    }
 }
