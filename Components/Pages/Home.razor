@@ -38,6 +38,12 @@ else
                     @GetContentFirstLine(context.Content)
                 </Template>
             </RadzenDataGridColumn>
+            <RadzenDataGridColumn>
+                <Template>
+                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="() => OnUpdateRow(context)" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                </Template>
+            </RadzenDataGridColumn>
         </Columns>
     </RadzenDataGrid>
 }

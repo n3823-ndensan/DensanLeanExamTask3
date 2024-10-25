@@ -1,4 +1,4 @@
-@page "/todo/form"
+@page "/todo/form/{id?}"
 @inject Repository.Todo.IToDoRepository ToDoRepository
 
 <h3>AddTodo</h3>
@@ -32,7 +32,7 @@
         <ValidationMessage For="@(() => todo.Content)" />
     </div>
     <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="追加" />
+        <input type="submit" class="btn btn-primary" value="@(IsInsert ? "登録" : "更新")" />
         <input class="btn btn-danger" @onclick="NavigateToHome" value="キャンセル" />
     </div>
 </EditForm>

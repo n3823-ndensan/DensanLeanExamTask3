@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Task3.Entities;
-using Task3.Repository.Todo;
 
 namespace Task3.Components.Pages;
 
@@ -44,5 +43,10 @@ public partial class Home
     private string GetStatusName(int no)
     {
         return ToDoModel.Statuses.FirstOrDefault(s => s.No == no).Name;
+    }
+
+    private void OnUpdateRow(ToDoModel todo)
+    {
+        Navigation.NavigateTo($"/todo/form/{todo.Id}");
     }
 }
