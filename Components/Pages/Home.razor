@@ -9,7 +9,7 @@
     <RadzenButton Click="NavigateToAddTodoPage" Text="追加" Icon="add" ButtonStyle="Radzen.ButtonStyle.Secondary" Style="margin-bottom: 10px"></RadzenButton>
 </div>
 @* ToDoListが0件だった場合はスピナーを表示する *@
-@if (ToDoList.Count == 0)
+@if (State == null || State.IsLoading)
 {
     <div class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
@@ -19,34 +19,43 @@
 }
 else
 {
-    <RadzenDataGrid TItem="ToDoModel" Data="ToDoList">
-        <Columns>
-            <RadzenDataGridColumn Title="タイトル">
-                <Template>
-                    @context.Title
-                </Template>
-            </RadzenDataGridColumn>
-            <RadzenDataGridColumn Title="期限">
-                <Template>
-                    @context.Deadline.ToString("yyyy/MM/dd hh:mm")
-                </Template>
-            </RadzenDataGridColumn>
-            <RadzenDataGridColumn Title="ステータス">
-                <Template>
-                    @GetStatusName(context.Status)
-                </Template>
-            </RadzenDataGridColumn>
-            <RadzenDataGridColumn Title="内容">
-                <Template>
-                    @GetContentFirstLine(context.Content)
-                </Template>
-            </RadzenDataGridColumn>
-            <RadzenDataGridColumn>
-                <Template>
-                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="() => OnUpdateRow(context)" @onclick:stopPropagation="true">
-                    </RadzenButton>
-                </Template>
-            </RadzenDataGridColumn>
-        </Columns>
-    </RadzenDataGrid>
+    if(State.ToDoList.Count == 0)
+    {
+        <div class="d-flex justify-content-center">
+            <p>ToDoがありません</p>
+        </div>
+    } 
+    else
+    {
+        <RadzenDataGrid TItem="ToDoModel" Data="State.ToDoList">
+            <Columns>
+                <RadzenDataGridColumn Title="タイトル">
+                    <Template>
+                        @context.Title
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="期限">
+                    <Template>
+                        @context.Deadline.ToString("yyyy/MM/dd hh:mm")
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="ステータス">
+                    <Template>
+                        @State.GetStatusName(context.Status)
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="内容">
+                    <Template>
+                        @State.GetContentFirstLine(context.Content)
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn>
+                    <Template>
+                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="() => OnUpdateRow(context)" @onclick:stopPropagation="true">
+                        </RadzenButton>
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
 }
