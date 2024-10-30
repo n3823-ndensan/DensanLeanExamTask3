@@ -27,7 +27,7 @@ else
     } 
     else
     {
-        <RadzenDataGrid TItem="ToDoModel" Data="State.ToDoList">
+        <RadzenDataGrid TItem="ToDoModel" Data="State.ToDoList" @ref="dataGrid">
             <Columns>
                 <RadzenDataGridColumn Title="タイトル">
                     <Template>
@@ -41,17 +41,19 @@ else
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn Title="ステータス">
                     <Template>
-                        @State.GetStatusName(context.Status)
+                        @GetStatusName(context.Status)
                     </Template>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn Title="内容">
                     <Template>
-                        @State.GetContentFirstLine(context.Content)
+                        @GetContentFirstLine(context.Content)
                     </Template>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn>
                     <Template>
                         <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="() => OnUpdateRow(context)" @onclick:stopPropagation="true">
+                        </RadzenButton>
+                        <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="() => OnDeleteRow(context)" @onclick:stopPropagation="true">
                         </RadzenButton>
                     </Template>
                 </RadzenDataGridColumn>
