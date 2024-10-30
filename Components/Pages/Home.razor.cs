@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Radzen.Blazor;
 using Task3.Entities;
-using Task3.Repository.Todo;
 using Task3.Services;
 
 namespace Task3.Components.Pages;

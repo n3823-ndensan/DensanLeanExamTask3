@@ -62,5 +62,17 @@ namespace Task3.Entities
             // Deadlineで比較
             return string.Compare(Deadline.ToString(), other.Deadline.ToString(), StringComparison.Ordinal);
         }
+
+        public ToDoModel Clone()
+        {
+            return new ToDoModel
+            {
+                Id = Id,
+                Title = Title,
+                Deadline = Deadline,
+                Status = Status,
+                Content = Content
+            };
+        }
     }
 }

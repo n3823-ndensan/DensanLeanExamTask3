@@ -15,12 +15,7 @@ public class ToDoInMemoryRepository : IToDoRepository
     }
     public Task<ToDoModel> GetToDoListByIdAsync(string Id)
     {
-        ToDoModel? todo = _todoList.Find(x => x.Id == Id);
-        if (todo == null)
-        {
-            throw new KeyNotFoundException($"ToDoModel not found. Id: {Id}");
-        }
-        return Task.FromResult(todo);
+        return Task.FromResult(GetToDoListById(Id).Clone());
     }
 
     /// <summary>
@@ -29,7 +24,8 @@ public class ToDoInMemoryRepository : IToDoRepository
     /// <returns>ToDoModelのリスト</returns>
     public Task<List<ToDoModel>> GetToDoListAsync()
     {
-        return Task.FromResult(_todoList);
+        //_todoListのCloneリストを返却する
+        return Task.FromResult(_todoList.Select(x => x.Clone()).ToList());
     }
 
     /// <summary>
@@ -50,12 +46,13 @@ public class ToDoInMemoryRepository : IToDoRepository
     /// <returns>更新したToDoModel</returns>
     public Task<ToDoModel> UpdateToDoAsync(ToDoModel todo)
     {
-        var index = _todoList.FindIndex(x => x.Title == todo.Title);
-        if (index >= 0)
-        {
-            _todoList[index] = todo;
-        }
-        return Task.FromResult(todo);
+        var target = GetToDoListById(todo.Id);
+        //todoをtargetにコピー
+        target.Title = todo.Title;
+        target.Deadline = todo.Deadline;
+        target.Status = todo.Status;
+        target.Content = todo.Content;
+        return Task.FromResult(target);
     }
 
     /// <summary>
@@ -65,7 +62,19 @@ public class ToDoInMemoryRepository : IToDoRepository
     /// <returns>削除したToDoModel</returns>
     public Task<ToDoModel> DeleteToDoAsync(ToDoModel todo)
     {
-        _todoList.Remove(todo);
-        return Task.FromResult(todo);
+        var target = GetToDoListById(todo.Id);
+        _todoList.Remove(target);
+        return Task.FromResult(target);
     }
+
+    private ToDoModel GetToDoListById(string Id)
+    {
+        ToDoModel? todo = _todoList.Find(x => x.Id == Id);
+        if (todo == null)
+        {
+            throw new KeyNotFoundException($"ToDoModel not found. Id: {Id}");
+        }
+        return todo;
+    }
+
 }
